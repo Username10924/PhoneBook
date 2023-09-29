@@ -28,6 +28,11 @@ public class LinkedListADT {
 			// Final check for last element (or in case of only element in list)
 			if(current.getData().compareToIgnoreCase(c) == 0 || current.getData().compareToPhone(c) == 0)
 				return false;
+			temp.setNext(current.getNext());
+			temp.setPrevious(current);
+			// Last node check
+			if(current.getNext() != null)
+				current.getNext().setPrevious(temp);
 			current.setNext(temp);
 			current = temp;
 			return true;
@@ -146,29 +151,28 @@ public class LinkedListADT {
 		}
 	}
 	
-	// O(n), can be O(1) if changed to double linked list
+	/* O(n) because this method searches for the phone number. Can be O(1)
+		if the method just deletes the current Node */
 	public boolean remove(){
 		System.out.print("Enter phone number: ");
 		String number = input.next();
-		if(head == null)
-			return false;
-		Node temp = head.getNext();
-		Node prev = head;
-		// Incase contact is in head
-		if(head.getData().getPhoneNumber().equals(number)) {
-			head = current = head.getNext();
-			return true;
-		}
-		else {
-			while(temp != null) {
-				if(temp.getData().getPhoneNumber().equals(number)){
-					prev.setNext(temp.getNext());
+		Node temp = head;
+		while(temp != null) {
+			if(temp.getData().getPhoneNumber().equals(number)) {
+				// First node check
+				if(temp == head) {
+					head = head.getNext();
+					head.setPrevious(null);
 					return true;
 				}
-				prev = temp;
-				temp = temp.getNext();
-		}
+				temp.getPrevious().setNext(temp.getNext());
+				// Last node check
+				if(temp.getNext() != null)
+					temp.getNext().setPrevious(temp.getPrevious());
+				return true;
 			}
+			temp = temp.getNext();
+		}
 		return false;
-}
-	}
+		
+	}}

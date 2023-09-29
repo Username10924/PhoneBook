@@ -60,4 +60,39 @@ public class Contact implements Comparable{
 	public int compareToPhone(Contact contact) {
         return this.phoneNumber.compareToIgnoreCase(contact.phoneNumber);
     }
+	/*  returns 1 if this.name comes BEFORE contact.name
+	 	returns -1 if this.name comes AFTER contact.name
+	 	returns 0 if they are the same
+	 	returns 2 if a name contains a non-alphabetical char */
+	public int compareAlphabet(Contact contact) {
+		int size = this.getName().length();
+		int sizeC = contact.getName().length();
+		int compare;
+		int compareC;
+		for(int i = 0; i < size || i < sizeC; i++) {
+			compare = (int) this.getName().charAt(i);
+			compareC = (int) contact.getName().charAt(i);
+			
+			// Checking for non-alphabetical characters
+			if((compare < 65 || compareC < 65) || (compare > 122 || compareC > 122))
+				return 2;
+			if((compare > 90 && compare < 97) || (compareC > 90 && compareC < 97))
+				return 2;
+			// Changing capital letters into small letters
+			if(compare > 64 && compare < 91)
+				compare += 32;
+			if(compareC > 64 && compareC < 91)
+				compareC += 32;
+			
+			if(compare < compareC)
+				return 1;
+			else if(compare > compareC)
+				return -1;
+		}
+		if(size < sizeC)
+			return 1;
+		else if(sizeC > size)
+			return -1;
+		return 0;
+	}
 }
