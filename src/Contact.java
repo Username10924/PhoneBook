@@ -1,5 +1,5 @@
 
-public class Contact implements Comparable{
+public class Contact implements Comparable<Contact>{
 	private String name;
 	// phone number is String because 0 is skipped if it's a first integer
 	private String phoneNumber;
@@ -52,7 +52,7 @@ public class Contact implements Comparable{
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	
+	/////////////////////////////////////////////////////////////////////////
 	// Returns 0 if equal
 	public int compareToIgnoreCase(Contact contact) {
         return this.name.compareToIgnoreCase(contact.name);
@@ -60,18 +60,21 @@ public class Contact implements Comparable{
 	public int compareToPhone(Contact contact) {
         return this.phoneNumber.compareToIgnoreCase(contact.phoneNumber);
     }
+	////////////////////////////////////////////////////////////////////////
 	/*  returns 1 if this.name comes BEFORE contact.name
 	 	returns -1 if this.name comes AFTER contact.name
 	 	returns 0 if they are the same
-	 	returns 2 if a name contains a non-alphabetical char */
-	public int compareAlphabet(Contact contact) {
+	 	returns 2 if a name contains a non-alphabetical char
+	 */
+	@Override
+	public int compareTo(Contact o) {
 		int size = this.getName().length();
-		int sizeC = contact.getName().length();
+		int sizeC = o.getName().length();
 		int compare;
 		int compareC;
 		for(int i = 0; i < size || i < sizeC; i++) {
 			compare = (int) this.getName().charAt(i);
-			compareC = (int) contact.getName().charAt(i);
+			compareC = (int) o.getName().charAt(i);
 			
 			// Checking for non-alphabetical characters
 			if((compare < 65 || compareC < 65) || (compare > 122 || compareC > 122))
