@@ -61,20 +61,24 @@ public class Contact implements Comparable<Contact>{
         return this.phoneNumber.compareToIgnoreCase(contact.phoneNumber);
     }
 	////////////////////////////////////////////////////////////////////////
-	/*  returns 1 if this.name comes BEFORE contact.name
-	 	returns -1 if this.name comes AFTER contact.name
-	 	returns 0 if they are the same
-	 	returns 2 if a name contains a non-alphabetical char
+	/*  returns 1 if this.name comes BEFORE o.name
+	 	returns -1 if this.name comes AFTER o.name
+	 	returns 0 if they are the exact same name
+	 	returns 2 if a name contains a non-alphabetical character
 	 */
 	@Override
+	// name1.compareTo(name2)
 	public int compareTo(Contact o) {
-		int size = this.getName().length();
-		int sizeC = o.getName().length();
-		int compare;
-		int compareC;
+		int size = this.getName().length(); 
+		int sizeC = o.getName().length(); 
+		int compare = 0;
+		int compareC = 0;
 		for(int i = 0; i < size || i < sizeC; i++) {
-			compare = (int) this.getName().charAt(i);
-			compareC = (int) o.getName().charAt(i);
+			// if statement to ensure no OutOfBound exceptions occur
+			if(i < size)
+				compare = (int) this.getName().charAt(i);
+			if(i < sizeC)
+				compareC = (int) o.getName().charAt(i);
 			
 			// Checking for non-alphabetical characters
 			if((compare < 65 || compareC < 65) || (compare > 122 || compareC > 122))

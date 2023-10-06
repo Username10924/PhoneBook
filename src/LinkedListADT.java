@@ -49,6 +49,7 @@ public class LinkedListADT {
 		int entry = input.nextInt();
 		input.nextLine();
 		Node temp;
+		boolean flag = false;
 		switch(entry) {
 		case 1:
 			temp = head;
@@ -101,12 +102,14 @@ public class LinkedListADT {
 					System.out.println("Address: " + temp.getData().getAddress());
 					System.out.println("Birthday: " + temp.getData().getBirthday());
 					System.out.println("Notes: " + temp.getData().getNotes());
-					return true;
+					flag = true;
 				}
 				temp = temp.getNext();
 			}
-			System.out.println("Contact not found.");
-			return false;
+			if(!flag) {
+				System.out.println("Contact not found.");
+				return false;
+			}
 		case 4:
 			temp = head;
 			System.out.print("Enter address: ");
@@ -120,12 +123,14 @@ public class LinkedListADT {
 					System.out.println("Address: " + temp.getData().getAddress());
 					System.out.println("Birthday: " + temp.getData().getBirthday());
 					System.out.println("Notes: " + temp.getData().getNotes());
-					return true;
+					flag = true;
 				}
 				temp = temp.getNext();
 			}
-			System.out.println("Contact not found.");
-			return false;
+			if(!flag) {
+				System.out.println("Contact not found.");
+				return false;
+			}
 		case 5:
 			temp = head;
 			System.out.print("Enter birthday: ");
@@ -139,12 +144,14 @@ public class LinkedListADT {
 					System.out.println("Address: " + temp.getData().getAddress());
 					System.out.println("Birthday: " + temp.getData().getBirthday());
 					System.out.println("Notes: " + temp.getData().getNotes());
-					return true;
+					flag = true;
 				}
 				temp = temp.getNext();
 			}
-			System.out.println("Contact not found.");
-			return false;
+			if(!flag) {
+				System.out.println("Contact not found.");
+				return false;
+			}
 		default:
 			System.out.println("Invalid entry!");
 			return false;
@@ -175,4 +182,39 @@ public class LinkedListADT {
 		}
 		return false;
 		
-	}}
+	}
+	
+	//Bubble sort
+	public void sort() {
+		Node temp;
+		current = head;
+		while(current.getNext() != null) {
+			if(current.getData().compareTo(current.getNext().getData()) == -1) {
+				if(current == head) {
+					temp = current.getNext();
+					current.setNext(temp.getNext());
+					temp.setPrevious(current.getPrevious());
+					current.setPrevious(temp);
+					temp.setNext(current);
+					head = temp;
+				}
+				else {
+				temp = current.getNext();
+				current.setNext(temp.getNext());
+				temp.setPrevious(current.getPrevious());
+				current.setPrevious(temp);
+				temp.setNext(current);
+			}}
+			if(current.getNext() != null)
+				current = current.getNext();
+		}
+	}
+	public void sssss() {
+		Node temp = head;
+		while(temp != null) {
+			System.out.println(temp.getData().getName());
+			temp = temp.getNext();
+		}
+	}
+	
+	}
