@@ -197,6 +197,8 @@ public class LinkedListADT {
 					current.setPrevious(temp);
 					temp.setNext(current);
 					head = temp;
+					if(current.getNext() != null)
+						current.getNext().setPrevious(current);
 				}
 				else {
 				temp = current.getNext();
@@ -204,7 +206,11 @@ public class LinkedListADT {
 				temp.setPrevious(current.getPrevious());
 				current.setPrevious(temp);
 				temp.setNext(current);
-			}}
+				temp.getPrevious().setNext(temp);
+				if(current.getNext() != null)
+					current.getNext().setPrevious(current);
+			}
+				}
 			if(current.getNext() != null)
 				current = current.getNext();
 		}

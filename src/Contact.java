@@ -67,7 +67,6 @@ public class Contact implements Comparable<Contact>{
 	 	returns 2 if a name contains a non-alphabetical character
 	 */
 	@Override
-	// name1.compareTo(name2)
 	public int compareTo(Contact o) {
 		int size = this.getName().length(); 
 		int sizeC = o.getName().length(); 
