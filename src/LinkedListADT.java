@@ -3,9 +3,11 @@ public class LinkedListADT {
 	private Node head;
 	private Node current;
 	private Scanner input;
+	private int size;
 	public LinkedListADT() {
 		head = null;
 		current = null;
+		size = 0;
 		input = new Scanner(System.in);
 	}
 	// O(n)
@@ -15,6 +17,7 @@ public class LinkedListADT {
 		if(head == null) {
 			head = temp;
 			current = temp;
+			size++;
 			return true;
 		}
 		else {
@@ -35,6 +38,7 @@ public class LinkedListADT {
 				current.getNext().setPrevious(temp);
 			current.setNext(temp);
 			current = temp;
+			size++;
 			return true;
 		}
 	}
@@ -170,12 +174,14 @@ public class LinkedListADT {
 				if(temp == head) {
 					head = head.getNext();
 					head.setPrevious(null);
+					size--;
 					return true;
 				}
 				temp.getPrevious().setNext(temp.getNext());
 				// Last node check
 				if(temp.getNext() != null)
 					temp.getNext().setPrevious(temp.getPrevious());
+				size--;
 				return true;
 			}
 			temp = temp.getNext();
@@ -187,32 +193,34 @@ public class LinkedListADT {
 	//Bubble sort
 	public void sort() {
 		Node temp;
-		current = head;
-		while(current.getNext() != null) {
-			if(current.getData().compareTo(current.getNext().getData()) == -1) {
-				if(current == head) {
+		for(int i = 0; i < size; i++) {
+			current = head;
+			while(current.getNext() != null) {
+				if(current.getData().compareTo(current.getNext().getData()) == -1) {
+					if(current == head) {
+						temp = current.getNext();
+						current.setNext(temp.getNext());
+						temp.setPrevious(current.getPrevious());
+						current.setPrevious(temp);
+						temp.setNext(current);
+						head = temp;
+						if(current.getNext() != null)
+							current.getNext().setPrevious(current);
+					}
+					else {
 					temp = current.getNext();
 					current.setNext(temp.getNext());
 					temp.setPrevious(current.getPrevious());
 					current.setPrevious(temp);
 					temp.setNext(current);
-					head = temp;
+					temp.getPrevious().setNext(temp);
 					if(current.getNext() != null)
 						current.getNext().setPrevious(current);
 				}
-				else {
-				temp = current.getNext();
-				current.setNext(temp.getNext());
-				temp.setPrevious(current.getPrevious());
-				current.setPrevious(temp);
-				temp.setNext(current);
-				temp.getPrevious().setNext(temp);
+					}
 				if(current.getNext() != null)
-					current.getNext().setPrevious(current);
+					current = current.getNext();
 			}
-				}
-			if(current.getNext() != null)
-				current = current.getNext();
 		}
 	}
 	public void sssss() {
