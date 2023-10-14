@@ -1,15 +1,17 @@
+import java.util.Date;
 import java.util.Scanner;
-public class Event {
+public class Event implements Comparable<Event>{
 	private String title;
-	private String date;
+	private Date date;
 	private String time;
 	private String location;
 	private Contact contact;
 	private Scanner input;
+	@SuppressWarnings("deprecation")
 	public Event(String title, String date, String time, String location, Contact contact) {
 		super();
 		this.title = title;
-		this.date = date;
+		this.date = new Date(date);
 		this.time = time;
 		this.location = location;
 		this.contact = contact;
@@ -21,10 +23,10 @@ public class Event {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public String getTime() {
@@ -51,4 +53,12 @@ public class Event {
 	public void setInput(Scanner input) {
 		this.input = input;
 	}
-}
+	public int compareTo(Event e) {
+        try {
+            return (this.title.compareToIgnoreCase(e.title));
+        }
+        catch (Exception t)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }}

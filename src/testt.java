@@ -3,7 +3,7 @@ public class testt {
 
 	public static void main(String[] args) {
 		Contact c1 = new Contact("bbb", "01234", "ali@x.x", "address1", "birthday1", "notes1");
-		Contact c2 = new Contact("a", "56789", "ali@x.x", "address2", "birthday2", "notes2");
+		Contact c2 = new Contact("bbb", "56789", "ali@x.x", "address2", "birthday2", "notes2");
 		Contact c3 = new Contact("ddd", "111111111", "ali@x.x", "address1", "birthday1", "notes1");
 		Contact c4 = new Contact("ccc", "5672222289", "ali@x.x", "address2", "birthday2", "notes2");
 		Contact c5 = new Contact("fff", "012321434", "ali@x.x", "address1", "birthday1", "notes1");
@@ -17,7 +17,6 @@ public class testt {
 		System.out.println(l.addContact(c6));
 		l.sort();
 		l.ssss();
-		l.search();
 	}
 
 }

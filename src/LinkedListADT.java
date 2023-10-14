@@ -1,17 +1,64 @@
 import java.util.Scanner;
-public class LinkedListADT<T> {
+public class LinkedListADT<T extends Comparable<T>>{
 	private Node<T> head;
 	private Node<T> current;
 	private Scanner input;
-	private int size;
+	public int size;
 	public LinkedListADT() {
 		head = null;
 		current = null;
 		size = 0;
 		input = new Scanner(System.in);
 	}
+	public boolean isEmpty() {
+		return head == null;
+	}
+	public void findFirst() {
+		current = head;
+	}
+	public T retrieve() {
+		return current.getData();
+	}
+	public boolean insertSort (T val) {
+
+        Node<T> tmp;
+        if (isEmpty()) {
+                current = head = new Node (val);
+        }
+        else {
+            if ( head.getData().compareTo(val) >0)
+            {
+                tmp = new Node(val);
+                tmp.setNext(head);
+                head = tmp;
+            }
+            else
+            {
+                Node<T> prev = null;
+                current = head;
+
+                while (( current != null ) && (current.getData().compareTo(val) <= 0))
+                {
+                    prev = current;
+                    current = current.getNext();
+                }
+                tmp = new Node (val);
+                if ( current != null)
+                {
+                    tmp.setNext(current);;
+                    prev.setNext(tmp);;
+                    current = tmp;
+                }
+                else
+                    current = tmp;
+                	prev.setNext(tmp);
+            }
+        }
+        size++;
+        return true;
+}
 	// O(n)
-	public boolean addContact(Contact c) {
+	/*public boolean addContact(Contact c) {
 		Node<T> temp = new Node(c);
 		// if list is empty, simply add and return
 		if(head == null) {
@@ -41,18 +88,22 @@ public class LinkedListADT<T> {
 			size++;
 			return true;
 		}
-	}
-	public boolean searchConflict(String cName) {
-		Node<Contact> temp = (Node<Contact>) head;
-		while(temp != null) {
-			if(temp.getData().getName().equalsIgnoreCase(cName)) {
-				return true;
-			}
-			
-			temp = temp.getNext();
-		}
-		return false;
-	}
+	}*/
+	public boolean search (T val)
+    {
+        if (head == null)
+            return false;
+
+        Node<T> node  = head;
+        while ((node != null) && (node.getData().compareTo(val) != 0))
+            node = node.getNext();
+        if ((node != null) && (node.getData().compareTo(val) == 0))
+        {
+            current = node;
+            return true;
+        }
+        return false;
+    }
 	public boolean searchName() {
 		Node<Contact> temp = (Node<Contact>) head;
 		System.out.print("Enter name: ");
@@ -210,7 +261,6 @@ public class LinkedListADT<T> {
 				// First node check
 				if(temp == head) {
 					head = head.getNext();
-					head.setPrevious(null);
 					size--;
 					return true;
 				}
@@ -227,12 +277,12 @@ public class LinkedListADT<T> {
 	}
 	
 	//Bubble sort
-	public void sort() {
+	/*public void sort() {
 		Node<T> temp;
 		for(int i = 0; i < size; i++) {
 			current = head;
 			while(current.getNext() != null) {
-				if(((Contact) current.getData()).compareTo( (Contact) current.getNext().getData()) == -1) {
+				if( current.getData().compareTo((T) current.getNext().getData()) > 0) {
 					if(current == head) {
 						temp = current.getNext();
 						current.setNext(temp.getNext());
@@ -258,13 +308,13 @@ public class LinkedListADT<T> {
 					current = current.getNext();
 			}
 		}
-	}
+	}*/
 	
-	/*public void ssss() {
+	public void ssss() {
 		Node<T> temp = head;
 		while(temp != null) {
 			System.out.println(((Contact)temp.getData()).getName());
 			temp = temp.getNext();
 		}
-	}*/
+	}
 	}

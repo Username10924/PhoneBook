@@ -1,4 +1,4 @@
-
+import java.util.Date;
 public class Contact implements Comparable<Contact>{
 	private String name;
 	// phone number is String because 0 is skipped if it's a first integer
@@ -7,7 +7,9 @@ public class Contact implements Comparable<Contact>{
 	private String address;
 	private String birthday;
 	private String notes;
-	public LinkedListADT<Event> eventList;
+	public LinkedListADT<Event> events;
+	public Contact() {
+	}
 	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
@@ -15,6 +17,21 @@ public class Contact implements Comparable<Contact>{
 		this.address = address;
 		this.birthday = birthday;
 		this.notes = notes;
+	}
+	public boolean addEvent(Event e) {
+		if(events.isEmpty()) {
+			events.insertSort(e);
+			return true;
+		}
+		events.findFirst();
+		for(int i = 0; i < events.size; i++) {
+			if(events.retrieve().getDate().compareTo(e.getDate()) == 0)
+				if(events.retrieve().getTime().compareTo(e.getTime()) == 0) 
+					return false;
+				
+		}
+		events.insertSort(e);
+		return true;
 	}
 	public String getName() {
 		return name;
@@ -68,37 +85,15 @@ public class Contact implements Comparable<Contact>{
 	 */
 	@Override
 	public int compareTo(Contact o) {
-		int size = this.getName().length(); 
-		int sizeC = o.getName().length(); 
-		int compare = 0;
-		int compareC = 0;
-		for(int i = 0; i < size || i < sizeC; i++) {
-			// if statement to ensure no OutOfBound exceptions occur
-			if(i < size)
-				compare = (int) this.getName().charAt(i);
-			if(i < sizeC)
-				compareC = (int) o.getName().charAt(i);
-			
-			// Checking for non-alphabetical characters
-			if((compare < 65 || compareC < 65) || (compare > 122 || compareC > 122))
-				return 2;
-			if((compare > 90 && compare < 97) || (compareC > 90 && compareC < 97))
-				return 2;
-			// Changing capital letters into small letters
-			if(compare > 64 && compare < 91)
-				compare += 32;
-			if(compareC > 64 && compareC < 91)
-				compareC += 32;
-			
-			if(compare < compareC)
-				return 1;
-			else if(compare > compareC)
-				return -1;
-		}
-		if(size < sizeC)
-			return 1;
-		else if(sizeC > size)
-			return -1;
-		return 0;
-	}
-}
+        try {
+            return (this.name.compareTo(o.name));   // big than zero
+                                                    //==0
+
+                                                     //less than zero
+        }
+        catch (Exception e)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
+}}
