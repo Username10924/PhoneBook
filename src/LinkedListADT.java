@@ -1,7 +1,7 @@
 import java.util.Scanner;
-public class LinkedListADT {
-	private Node head;
-	private Node current;
+public class LinkedListADT<T> {
+	private Node<T> head;
+	private Node<T> current;
 	private Scanner input;
 	private int size;
 	public LinkedListADT() {
@@ -12,7 +12,7 @@ public class LinkedListADT {
 	}
 	// O(n)
 	public boolean addContact(Contact c) {
-		Node temp = new Node (c);
+		Node<T> temp = new Node(c);
 		// if list is empty, simply add and return
 		if(head == null) {
 			head = temp;
@@ -24,12 +24,12 @@ public class LinkedListADT {
 			current = head;
 			// runs through the entire list to check for common #number / name therefore --> O(n)
 			while(current.getNext() != null) {
-				if(current.getData().compareToIgnoreCase(c) == 0 || current.getData().compareToPhone(c) == 0)
+				if(((Contact) current.getData()).compareToIgnoreCase(c) == 0 || ((Contact) current.getData()).compareToPhone(c) == 0)
 					return false;
 				current = current.getNext();
 			}
 			// Final check for last element (or in case of only element in list)
-			if(current.getData().compareToIgnoreCase(c) == 0 || current.getData().compareToPhone(c) == 0)
+			if( ((Contact) current.getData()).compareToIgnoreCase(c) == 0 ||  ((Contact) current.getData()).compareToPhone(c) == 0)
 				return false;
 			temp.setNext(current.getNext());
 			temp.setPrevious(current);
@@ -42,7 +42,132 @@ public class LinkedListADT {
 			return true;
 		}
 	}
-	public boolean search() {
+	public boolean searchConflict(String cName) {
+		Node<Contact> temp = (Node<Contact>) head;
+		while(temp != null) {
+			if(temp.getData().getName().equalsIgnoreCase(cName)) {
+				return true;
+			}
+			
+			temp = temp.getNext();
+		}
+		return false;
+	}
+	public boolean searchName() {
+		Node<Contact> temp = (Node<Contact>) head;
+		System.out.print("Enter name: ");
+		String name = input.nextLine();
+		while(temp != null) {
+			if(temp.getData().getName().equalsIgnoreCase(name)) {
+				System.out.println("Contact found!");
+				System.out.println("Name: " + temp.getData().getName());
+				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
+				System.out.println("Email address: " + temp.getData().getEmail());
+				System.out.println("Address: " + temp.getData().getAddress());
+				System.out.println("Birthday: " + temp.getData().getBirthday());
+				System.out.println("Notes: " + temp.getData().getNotes());
+				return true;
+			}
+			temp = temp.getNext();
+		}
+		System.out.println("Contact not found.");
+		return false;
+	}
+	public boolean searchPhone() {
+		Node<Contact> temp = (Node<Contact>) head;
+		System.out.print("Enter number: ");
+		String number = input.next();
+		while(temp != null) {
+			if(temp.getData().getPhoneNumber().equals(number)) {
+				System.out.println("Contact found!");
+				System.out.println("Name: " + temp.getData().getName());
+				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
+				System.out.println("Email address: " + temp.getData().getEmail());
+				System.out.println("Address: " + temp.getData().getAddress());
+				System.out.println("Birthday: " + temp.getData().getBirthday());
+				System.out.println("Notes: " + temp.getData().getNotes());
+				return true;
+			}
+			temp = temp.getNext();
+		}
+		System.out.println("Contact not found.");
+		return false;
+	}
+	public boolean searchEmail() {
+		Node<Contact> temp = (Node<Contact>)head;
+		boolean flag = false;
+		System.out.print("Enter email: ");
+		String email = input.next();
+		while(temp != null) {
+			if(temp.getData().getEmail().equals(email)) {
+				System.out.println("Contact found!");
+				System.out.println("Name: " + temp.getData().getName());
+				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
+				System.out.println("Email address: " + temp.getData().getEmail());
+				System.out.println("Address: " + temp.getData().getAddress());
+				System.out.println("Birthday: " + temp.getData().getBirthday());
+				System.out.println("Notes: " + temp.getData().getNotes());
+				flag = true;
+			}
+			temp = temp.getNext();
+		}
+		if(!flag) {
+			System.out.println("Contact not found.");
+			return false;
+		}
+		return true;
+	}
+	public boolean searchAddress() {
+		Node<Contact> temp = (Node<Contact>) head;
+		boolean flag = false;
+		System.out.print("Enter address: ");
+		String address = input.nextLine();
+		while(temp != null) {
+			if(temp.getData().getAddress().equals(address)) {
+				System.out.println("Contact found!");
+				System.out.println("Name: " + temp.getData().getName());
+				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
+				System.out.println("Email address: " + temp.getData().getEmail());
+				System.out.println("Address: " + temp.getData().getAddress());
+				System.out.println("Birthday: " + temp.getData().getBirthday());
+				System.out.println("Notes: " + temp.getData().getNotes());
+				flag = true;
+			}
+			temp = temp.getNext();
+		}
+		if(!flag) {
+			System.out.println("Contact not found.");
+			return false;
+		}
+		return true;
+	}
+	public boolean searchBirthday() {
+		Node<Contact> temp = (Node<Contact>) head;
+		boolean flag = false;
+		System.out.print("Enter birthday: ");
+		String bday = input.next();
+		while(temp != null) {
+			if(temp.getData().getBirthday().equals(bday)) {
+				System.out.println("Contact found!");
+				System.out.println("Name: " + temp.getData().getName());
+				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
+				System.out.println("Email address: " + temp.getData().getEmail());
+				System.out.println("Address: " + temp.getData().getAddress());
+				System.out.println("Birthday: " + temp.getData().getBirthday());
+				System.out.println("Notes: " + temp.getData().getNotes());
+				flag = true;
+			}
+			temp = temp.getNext();
+		}
+		if(!flag) {
+			System.out.println("Contact not found.");
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public void search() {
 		System.out.println("Enter search criteria: ");
 		System.out.println("1) Name");
 		System.out.println("2) Phone number");
@@ -52,124 +177,36 @@ public class LinkedListADT {
 		System.out.print("Enter choice: ");
 		int entry = input.nextInt();
 		input.nextLine();
-		Node temp;
-		boolean flag = false;
 		switch(entry) {
 		case 1:
-			temp = head;
-			System.out.print("Enter name: ");
-			String name = input.nextLine();
-			while(temp != null) {
-				if(temp.getData().getName().equalsIgnoreCase(name)) {
-					System.out.println("Contact found!");
-					System.out.println("Name: " + temp.getData().getName());
-					System.out.println("Phone number: " + temp.getData().getPhoneNumber());
-					System.out.println("Email address: " + temp.getData().getEmail());
-					System.out.println("Address: " + temp.getData().getAddress());
-					System.out.println("Birthday: " + temp.getData().getBirthday());
-					System.out.println("Notes: " + temp.getData().getNotes());
-					return true;
-				}
-				temp = temp.getNext();
-			}
-			System.out.println("Contact not found.");
-			return false;
+			searchName();
+			break;
 		case 2:
-			temp = head;
-			System.out.print("Enter number: ");
-			String number = input.next();
-			while(temp != null) {
-				if(temp.getData().getPhoneNumber().equals(number)) {
-					System.out.println("Contact found!");
-					System.out.println("Name: " + temp.getData().getName());
-					System.out.println("Phone number: " + temp.getData().getPhoneNumber());
-					System.out.println("Email address: " + temp.getData().getEmail());
-					System.out.println("Address: " + temp.getData().getAddress());
-					System.out.println("Birthday: " + temp.getData().getBirthday());
-					System.out.println("Notes: " + temp.getData().getNotes());
-					return true;
-				}
-				temp = temp.getNext();
-			}
-			System.out.println("Contact not found.");
-			return false;
+			searchPhone();
+			break;
 		case 3:
-			temp = head;
-			System.out.print("Enter email: ");
-			String email = input.next();
-			while(temp != null) {
-				if(temp.getData().getEmail().equals(email)) {
-					System.out.println("Contact found!");
-					System.out.println("Name: " + temp.getData().getName());
-					System.out.println("Phone number: " + temp.getData().getPhoneNumber());
-					System.out.println("Email address: " + temp.getData().getEmail());
-					System.out.println("Address: " + temp.getData().getAddress());
-					System.out.println("Birthday: " + temp.getData().getBirthday());
-					System.out.println("Notes: " + temp.getData().getNotes());
-					flag = true;
-				}
-				temp = temp.getNext();
-			}
-			if(!flag) {
-				System.out.println("Contact not found.");
-				return false;
-			}
+			searchEmail();
+			break;
 		case 4:
-			temp = head;
-			System.out.print("Enter address: ");
-			String address = input.nextLine();
-			while(temp != null) {
-				if(temp.getData().getAddress().equals(address)) {
-					System.out.println("Contact found!");
-					System.out.println("Name: " + temp.getData().getName());
-					System.out.println("Phone number: " + temp.getData().getPhoneNumber());
-					System.out.println("Email address: " + temp.getData().getEmail());
-					System.out.println("Address: " + temp.getData().getAddress());
-					System.out.println("Birthday: " + temp.getData().getBirthday());
-					System.out.println("Notes: " + temp.getData().getNotes());
-					flag = true;
-				}
-				temp = temp.getNext();
-			}
-			if(!flag) {
-				System.out.println("Contact not found.");
-				return false;
-			}
+			searchAddress();
+			break;
 		case 5:
-			temp = head;
-			System.out.print("Enter birthday: ");
-			String bday = input.next();
-			while(temp != null) {
-				if(temp.getData().getBirthday().equals(bday)) {
-					System.out.println("Contact found!");
-					System.out.println("Name: " + temp.getData().getName());
-					System.out.println("Phone number: " + temp.getData().getPhoneNumber());
-					System.out.println("Email address: " + temp.getData().getEmail());
-					System.out.println("Address: " + temp.getData().getAddress());
-					System.out.println("Birthday: " + temp.getData().getBirthday());
-					System.out.println("Notes: " + temp.getData().getNotes());
-					flag = true;
-				}
-				temp = temp.getNext();
-			}
-			if(!flag) {
-				System.out.println("Contact not found.");
-				return false;
-			}
+			searchBirthday();
+			break;
 		default:
 			System.out.println("Invalid entry!");
-			return false;
+			return;
 		}
 	}
-	
+
 	/* O(n) because this method searches for the phone number. Can be O(1)
 		if the method just deletes the current Node */
-	public boolean remove(){
+	public boolean removeContact(){
 		System.out.print("Enter phone number: ");
 		String number = input.next();
 		Node temp = head;
 		while(temp != null) {
-			if(temp.getData().getPhoneNumber().equals(number)) {
+			if(((Contact) temp.getData()).getPhoneNumber().equals(number)) {
 				// First node check
 				if(temp == head) {
 					head = head.getNext();
@@ -187,16 +224,15 @@ public class LinkedListADT {
 			temp = temp.getNext();
 		}
 		return false;
-		
 	}
 	
 	//Bubble sort
 	public void sort() {
-		Node temp;
+		Node<T> temp;
 		for(int i = 0; i < size; i++) {
 			current = head;
 			while(current.getNext() != null) {
-				if(current.getData().compareTo(current.getNext().getData()) == -1) {
+				if(((Contact) current.getData()).compareTo( (Contact) current.getNext().getData()) == -1) {
 					if(current == head) {
 						temp = current.getNext();
 						current.setNext(temp.getNext());
@@ -223,12 +259,12 @@ public class LinkedListADT {
 			}
 		}
 	}
-	public void sssss() {
-		Node temp = head;
+	
+	/*public void ssss() {
+		Node<T> temp = head;
 		while(temp != null) {
-			System.out.println(temp.getData().getName());
+			System.out.println(((Contact)temp.getData()).getName());
 			temp = temp.getNext();
 		}
-	}
-	
+	}*/
 	}

@@ -5,9 +5,9 @@ public class Contact implements Comparable<Contact>{
 	private String phoneNumber;
 	private String email;
 	private String address;
-	//birthday string??
 	private String birthday;
 	private String notes;
+	public LinkedListADT<Event> eventList;
 	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;

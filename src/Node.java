@@ -1,22 +1,22 @@
 
-public class Node {
-	private Contact data;
-	private Node next;
-	private Node previous;
+public class Node<T> {
+	private T data;
+	private Node<T> next;
+	private Node<T> previous;
 	public Node() {
 		data = null;
 		next = null;
 		previous = null;
 	}
-	public Node(Contact data) {
+	public Node(T data) {
 		this.data = data;
 		next = null;
 		previous = null;
 	}
-	public Contact getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(Contact data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 	public Node getNext() {
