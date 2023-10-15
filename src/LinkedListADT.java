@@ -16,7 +16,15 @@ public class LinkedListADT<T extends Comparable<T>>{
 	public void findFirst() {
 		current = head;
 	}
+	public void findNext() {
+		current.setNext(current.getNext());
+	}
+	public void update (T val) {
+        current.setData(val);;
+}
 	public T retrieve() {
+		if(current == null)
+			return null;
 		return current.getData();
 	}
 	public boolean insertSort (T val) {
@@ -28,7 +36,7 @@ public class LinkedListADT<T extends Comparable<T>>{
         else {
             if ( head.getData().compareTo(val) >0)
             {
-                tmp = new Node(val);
+                tmp = new Node<T>(val);
                 tmp.setNext(head);
                 head = tmp;
             }
@@ -42,7 +50,7 @@ public class LinkedListADT<T extends Comparable<T>>{
                     prev = current;
                     current = current.getNext();
                 }
-                tmp = new Node (val);
+                tmp = new Node<T> (val);
                 if ( current != null)
                 {
                     tmp.setNext(current);;
@@ -57,38 +65,31 @@ public class LinkedListADT<T extends Comparable<T>>{
         size++;
         return true;
 }
-	// O(n)
-	/*public boolean addContact(Contact c) {
-		Node<T> temp = new Node(c);
-		// if list is empty, simply add and return
-		if(head == null) {
-			head = temp;
-			current = temp;
-			size++;
-			return true;
-		}
-		else {
-			current = head;
-			// runs through the entire list to check for common #number / name therefore --> O(n)
-			while(current.getNext() != null) {
-				if(((Contact) current.getData()).compareToIgnoreCase(c) == 0 || ((Contact) current.getData()).compareToPhone(c) == 0)
-					return false;
-				current = current.getNext();
-			}
-			// Final check for last element (or in case of only element in list)
-			if( ((Contact) current.getData()).compareToIgnoreCase(c) == 0 ||  ((Contact) current.getData()).compareToPhone(c) == 0)
-				return false;
-			temp.setNext(current.getNext());
-			temp.setPrevious(current);
-			// Last node check
-			if(current.getNext() != null)
-				current.getNext().setPrevious(temp);
-			current.setNext(temp);
-			current = temp;
-			size++;
-			return true;
-		}
-	}*/
+	public T remove (T val) {
+
+        if (search (val) == false)
+         return null;
+
+        T data = current.getData();
+
+        if (current == head) {
+                head = head.getNext();
+        }
+        else {
+                Node tmp = head;
+
+                while (tmp.getNext() != current)
+                        tmp = tmp.getNext();
+
+               tmp.setNext(current.getNext());;
+        }
+        if (current.getNext() == null)
+                current = head;
+        else
+                current = current.getNext();
+        size -- ;
+        return data;
+    }
 	public boolean search (T val)
     {
         if (head == null)
@@ -250,70 +251,13 @@ public class LinkedListADT<T extends Comparable<T>>{
 		}
 	}
 
-	/* O(n) because this method searches for the phone number. Can be O(1)
-		if the method just deletes the current Node */
-	public boolean removeContact(){
-		System.out.print("Enter phone number: ");
-		String number = input.next();
-		Node temp = head;
-		while(temp != null) {
-			if(((Contact) temp.getData()).getPhoneNumber().equals(number)) {
-				// First node check
-				if(temp == head) {
-					head = head.getNext();
-					size--;
-					return true;
-				}
-				temp.getPrevious().setNext(temp.getNext());
-				// Last node check
-				if(temp.getNext() != null)
-					temp.getNext().setPrevious(temp.getPrevious());
-				size--;
-				return true;
-			}
-			temp = temp.getNext();
-		}
-		return false;
-	}
+
 	
-	//Bubble sort
-	/*public void sort() {
-		Node<T> temp;
-		for(int i = 0; i < size; i++) {
-			current = head;
-			while(current.getNext() != null) {
-				if( current.getData().compareTo((T) current.getNext().getData()) > 0) {
-					if(current == head) {
-						temp = current.getNext();
-						current.setNext(temp.getNext());
-						temp.setPrevious(current.getPrevious());
-						current.setPrevious(temp);
-						temp.setNext(current);
-						head = temp;
-						if(current.getNext() != null)
-							current.getNext().setPrevious(current);
-					}
-					else {
-					temp = current.getNext();
-					current.setNext(temp.getNext());
-					temp.setPrevious(current.getPrevious());
-					current.setPrevious(temp);
-					temp.setNext(current);
-					temp.getPrevious().setNext(temp);
-					if(current.getNext() != null)
-						current.getNext().setPrevious(current);
-				}
-					}
-				if(current.getNext() != null)
-					current = current.getNext();
-			}
-		}
-	}*/
 	
 	public void ssss() {
 		Node<T> temp = head;
 		while(temp != null) {
-			System.out.println(((Contact)temp.getData()).getName());
+			System.out.println(((Contact)temp.getData()).getPhoneNumber());
 			temp = temp.getNext();
 		}
 	}

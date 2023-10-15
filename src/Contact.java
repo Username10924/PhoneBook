@@ -9,6 +9,13 @@ public class Contact implements Comparable<Contact>{
 	private String notes;
 	public LinkedListADT<Event> events;
 	public Contact() {
+		this.name = " ";
+		this.phoneNumber = " ";
+		this.email = " ";
+		this.address = " ";
+		this.birthday = " ";
+		this.notes = " ";
+		events = new LinkedListADT<Event>();
 	}
 	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes) {
 		this.name = name;
@@ -17,6 +24,7 @@ public class Contact implements Comparable<Contact>{
 		this.address = address;
 		this.birthday = birthday;
 		this.notes = notes;
+		events = new LinkedListADT<Event>();
 	}
 	public boolean addEvent(Event e) {
 		if(events.isEmpty()) {
@@ -28,7 +36,7 @@ public class Contact implements Comparable<Contact>{
 			if(events.retrieve().getDate().compareTo(e.getDate()) == 0)
 				if(events.retrieve().getTime().compareTo(e.getTime()) == 0) 
 					return false;
-				
+			events.findNext();
 		}
 		events.insertSort(e);
 		return true;

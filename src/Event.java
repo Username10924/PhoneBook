@@ -5,10 +5,13 @@ public class Event implements Comparable<Event>{
 	private Date date;
 	private String time;
 	private String location;
-	private Contact contact;
+	public String contact;
 	private Scanner input;
 	@SuppressWarnings("deprecation")
-	public Event(String title, String date, String time, String location, Contact contact) {
+	public Event() {
+
+	}
+	public Event(String title, String date, String time, String location, String contact) {
 		super();
 		this.title = title;
 		this.date = new Date(date);
@@ -26,8 +29,8 @@ public class Event implements Comparable<Event>{
 	public Date getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(String string) {
+		this.date = new Date(string);
 	}
 	public String getTime() {
 		return time;
@@ -41,11 +44,8 @@ public class Event implements Comparable<Event>{
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Contact getContact() {
+	public String getContact() {
 		return contact;
-	}
-	public void setContact(Contact contact) {
-		this.contact = contact;
 	}
 	public Scanner getInput() {
 		return input;
