@@ -32,7 +32,7 @@ public class Contact implements Comparable<Contact>{
 			return true;
 		}
 		events.findFirst();
-		for(int i = 0; i < events.size; i++) {
+		while(events.retrieve() != null) {
 			if(events.retrieve().getDate().compareTo(e.getDate()) == 0)
 				if(events.retrieve().getTime().compareTo(e.getTime()) == 0) 
 					return false;
@@ -77,31 +77,19 @@ public class Contact implements Comparable<Contact>{
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	/////////////////////////////////////////////////////////////////////////
-	// Returns 0 if equal
-	public int compareToIgnoreCase(Contact contact) {
-        return this.name.compareToIgnoreCase(contact.name);
-    }
-	public int compareToPhone(Contact contact) {
-        return this.phoneNumber.compareToIgnoreCase(contact.phoneNumber);
-    }
-	////////////////////////////////////////////////////////////////////////
-	/*  returns 1 if this.name comes BEFORE o.name
-	 	returns -1 if this.name comes AFTER o.name
-	 	returns 0 if they are the exact same name
-	 	returns 2 if a name contains a non-alphabetical character
-	 */
-	@Override
-	public int compareTo(Contact o) {
-        try {
-            return (this.name.compareTo(o.name));   // big than zero
-                                                    //==0
 
-                                                     //less than zero
-        }
-        catch (Exception e)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
+
+	@Override
+	
+	// returns > 0 if o.name becomes BEFORE this.name
+	// returns 0 if both are the same
+	// returns < 0 if o.name becomes AFTER this.name
+	public int compareTo(Contact o) {
+       
+            return (this.name.compareTo(o.name));   
+                                                    
+
+                                                     
+
         
 }}

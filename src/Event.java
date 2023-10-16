@@ -5,7 +5,7 @@ public class Event implements Comparable<Event>{
 	private Date date;
 	private String time;
 	private String location;
-	public String contact;
+	private String contact;
 	private Scanner input;
 	@SuppressWarnings("deprecation")
 	public Event() {
@@ -47,18 +47,20 @@ public class Event implements Comparable<Event>{
 	public String getContact() {
 		return contact;
 	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
 	public Scanner getInput() {
 		return input;
 	}
 	public void setInput(Scanner input) {
 		this.input = input;
 	}
+	
+	// returns > 0 if o.name becomes BEFORE this.name
+	// returns 0 if both are the same
+	// returns < 0 if o.name becomes AFTER this.name
 	public int compareTo(Event e) {
-        try {
             return (this.title.compareToIgnoreCase(e.title));
-        }
-        catch (Exception t)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
+        
     }}

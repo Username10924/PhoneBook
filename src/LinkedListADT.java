@@ -1,116 +1,127 @@
 import java.util.Scanner;
-public class LinkedListADT<T extends Comparable<T>>{
+
+public class LinkedListADT<T extends Comparable<T>> {
 	private Node<T> head;
 	private Node<T> current;
 	private Scanner input;
 	public int size;
+
 	public LinkedListADT() {
 		head = null;
 		current = null;
 		size = 0;
 		input = new Scanner(System.in);
 	}
+
 	public boolean isEmpty() {
 		return head == null;
 	}
+
 	public void findFirst() {
 		current = head;
 	}
+
 	public void findNext() {
-		current.setNext(current.getNext());
+		if (current == null)
+			return;
+		current = current.next;
 	}
-	public void update (T val) {
-        current.setData(val);;
-}
+
+	public void update(T val) {
+		current.setData(val);
+		;
+	}
+
 	public T retrieve() {
-		if(current == null)
+		if (current == null)
 			return null;
 		return current.getData();
 	}
-	public boolean insertSort (T val) {
 
-        Node<T> tmp;
-        if (isEmpty()) {
-                current = head = new Node (val);
-        }
-        else {
-            if ( head.getData().compareTo(val) >0)
-            {
-                tmp = new Node<T>(val);
-                tmp.setNext(head);
-                head = tmp;
-            }
-            else
-            {
-                Node<T> prev = null;
-                current = head;
+	public boolean insertSort(T val) {
 
-                while (( current != null ) && (current.getData().compareTo(val) <= 0))
-                {
-                    prev = current;
-                    current = current.getNext();
-                }
-                tmp = new Node<T> (val);
-                if ( current != null)
-                {
-                    tmp.setNext(current);;
-                    prev.setNext(tmp);;
-                    current = tmp;
-                }
-                else
-                    current = tmp;
-                	prev.setNext(tmp);
-            }
-        }
-        size++;
-        return true;
-}
-	public T remove (T val) {
+		Node<T> tmp;
+		if (isEmpty()) {
+			current = head = new Node(val);
+		}
+		else {
+			// if val alphabetically is before head
+			if (head.getData().compareTo(val) > 0) {
+				tmp = new Node<T>(val);
+				tmp.setNext(head);
+				head = tmp;
+			}
+			// a loop to check when a val should alphabetically swap with a node.
+			else {
+				Node<T> prev = null;
+				current = head;
 
-        if (search (val) == false)
-         return null;
+				while ((current != null) && (current.getData().compareTo(val) <= 0)) {
+					prev = current;
+					current = current.getNext();
+				}
+				tmp = new Node<T>(val);
+				if (current != null) {
+					tmp.setNext(current);
+					;
+					prev.setNext(tmp);
+					;
+					current = tmp;
+				} else
+					current = tmp;
+				prev.setNext(tmp);
+			}
+		}
+		size++;
+		return true;
+	}
 
-        T data = current.getData();
+	public T remove(T val) {
 
-        if (current == head) {
-                head = head.getNext();
-        }
-        else {
-                Node tmp = head;
+		if (search(val) == false)
+			return null;
 
-                while (tmp.getNext() != current)
-                        tmp = tmp.getNext();
+		T data = current.getData();
 
-               tmp.setNext(current.getNext());;
-        }
-        if (current.getNext() == null)
-                current = head;
-        else
-                current = current.getNext();
-        size -- ;
-        return data;
-    }
-	public boolean search (T val)
-    {
-        if (head == null)
-            return false;
+		if (current == head) {
+			head = head.getNext();
+		} else {
+			Node tmp = head;
 
-        Node<T> node  = head;
-        while ((node != null) && (node.getData().compareTo(val) != 0))
-            node = node.getNext();
-        if ((node != null) && (node.getData().compareTo(val) == 0))
-        {
-            current = node;
-            return true;
-        }
-        return false;
-    }
+			while (tmp.getNext() != current)
+				tmp = tmp.getNext();
+
+			tmp.setNext(current.getNext());
+			;
+		}
+		if (current.getNext() == null)
+			current = head;
+		else
+			current = current.getNext();
+		size--;
+		return data;
+	}
+
+	public boolean search(T val) {
+		if (head == null)
+			return false;
+
+		Node<T> node = head;
+		while ((node != null) && (node.getData().compareTo(val) != 0))
+			node = node.getNext();
+		if ((node != null) && (node.getData().compareTo(val) == 0)) {
+			current = node;
+			return true;
+		}
+		return false;
+	}
+
 	public boolean searchName() {
 		Node<Contact> temp = (Node<Contact>) head;
 		System.out.print("Enter name: ");
 		String name = input.nextLine();
-		while(temp != null) {
-			if(temp.getData().getName().equalsIgnoreCase(name)) {
+		while (temp != null) {
+			if (temp.getData().getName().equalsIgnoreCase(name)) {
 				System.out.println("Contact found!");
 				System.out.println("Name: " + temp.getData().getName());
 				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
@@ -125,12 +136,13 @@ public class LinkedListADT<T extends Comparable<T>>{
 		System.out.println("Contact not found.");
 		return false;
 	}
+
 	public boolean searchPhone() {
 		Node<Contact> temp = (Node<Contact>) head;
 		System.out.print("Enter number: ");
 		String number = input.next();
-		while(temp != null) {
-			if(temp.getData().getPhoneNumber().equals(number)) {
+		while (temp != null) {
+			if (temp.getData().getPhoneNumber().equals(number)) {
 				System.out.println("Contact found!");
 				System.out.println("Name: " + temp.getData().getName());
 				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
@@ -145,13 +157,14 @@ public class LinkedListADT<T extends Comparable<T>>{
 		System.out.println("Contact not found.");
 		return false;
 	}
+
 	public boolean searchEmail() {
-		Node<Contact> temp = (Node<Contact>)head;
+		Node<Contact> temp = (Node<Contact>) head;
 		boolean flag = false;
 		System.out.print("Enter email: ");
 		String email = input.next();
-		while(temp != null) {
-			if(temp.getData().getEmail().equals(email)) {
+		while (temp != null) {
+			if (temp.getData().getEmail().equals(email)) {
 				System.out.println("Contact found!");
 				System.out.println("Name: " + temp.getData().getName());
 				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
@@ -163,19 +176,20 @@ public class LinkedListADT<T extends Comparable<T>>{
 			}
 			temp = temp.getNext();
 		}
-		if(!flag) {
+		if (!flag) {
 			System.out.println("Contact not found.");
 			return false;
 		}
 		return true;
 	}
+
 	public boolean searchAddress() {
 		Node<Contact> temp = (Node<Contact>) head;
 		boolean flag = false;
 		System.out.print("Enter address: ");
 		String address = input.nextLine();
-		while(temp != null) {
-			if(temp.getData().getAddress().equals(address)) {
+		while (temp != null) {
+			if (temp.getData().getAddress().equals(address)) {
 				System.out.println("Contact found!");
 				System.out.println("Name: " + temp.getData().getName());
 				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
@@ -187,19 +201,20 @@ public class LinkedListADT<T extends Comparable<T>>{
 			}
 			temp = temp.getNext();
 		}
-		if(!flag) {
+		if (!flag) {
 			System.out.println("Contact not found.");
 			return false;
 		}
 		return true;
 	}
+
 	public boolean searchBirthday() {
 		Node<Contact> temp = (Node<Contact>) head;
 		boolean flag = false;
 		System.out.print("Enter birthday: ");
 		String bday = input.next();
-		while(temp != null) {
-			if(temp.getData().getBirthday().equals(bday)) {
+		while (temp != null) {
+			if (temp.getData().getBirthday().equals(bday)) {
 				System.out.println("Contact found!");
 				System.out.println("Name: " + temp.getData().getName());
 				System.out.println("Phone number: " + temp.getData().getPhoneNumber());
@@ -211,14 +226,13 @@ public class LinkedListADT<T extends Comparable<T>>{
 			}
 			temp = temp.getNext();
 		}
-		if(!flag) {
+		if (!flag) {
 			System.out.println("Contact not found.");
 			return false;
 		}
 		return true;
 	}
-	
-	
+
 	public void search() {
 		System.out.println("Enter search criteria: ");
 		System.out.println("1) Name");
@@ -229,7 +243,7 @@ public class LinkedListADT<T extends Comparable<T>>{
 		System.out.print("Enter choice: ");
 		int entry = input.nextInt();
 		input.nextLine();
-		switch(entry) {
+		switch (entry) {
 		case 1:
 			searchName();
 			break;
@@ -250,15 +264,4 @@ public class LinkedListADT<T extends Comparable<T>>{
 			return;
 		}
 	}
-
-
-	
-	
-	public void ssss() {
-		Node<T> temp = head;
-		while(temp != null) {
-			System.out.println(((Contact)temp.getData()).getPhoneNumber());
-			temp = temp.getNext();
-		}
-	}
-	}
+}

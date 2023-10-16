@@ -1,8 +1,8 @@
 
 public class Node<T> {
-	private T data;
-	private Node<T> next;
-	private Node() {
+	public T data;
+	public Node<T> next;
+	public Node() {
 		data = null;
 		next = null;
 	}
