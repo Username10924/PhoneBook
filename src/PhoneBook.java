@@ -1,3 +1,4 @@
+import java.sql.Date;
 import java.util.Scanner;
 public class PhoneBook{
 		static LinkedListADT<Contact> listC = new LinkedListADT<Contact>();
@@ -8,6 +9,8 @@ public class PhoneBook{
 			listC = new LinkedListADT<Contact>();
 			listE = new LinkedListADT<Event>();
 		}
+
+		// 1) Add Contact.
 		public static boolean addContact() {
 			System.out.println("Enter the contact's name: ");
 			// filler solves java bug of skipping input.nextLine()
@@ -47,8 +50,150 @@ public class PhoneBook{
 			listC.insertSort(c);
 			return true;
 		}
+
+		// 2) search for a contact
+		public static void search() {
+
+			if(listC.isEmpty()){
+				System.out.println("please enter a contact first!");
+				return;
+			}
+
+		System.out.println("Enter search criteria: ");
+		System.out.println("1) Name");
+		System.out.println("2) Phone number");
+		System.out.println("3) Email address");
+		System.out.println("4) Address");
+		System.out.println("5) Birthday");
+		System.out.print("Enter choice: ");
+		int entry = input.nextInt();
+		input.nextLine();
+		switch (entry) {
+		case 1:
+			searchName();
+			break;
+		case 2:
+			searchPhone();
+			break;
+		case 3:
+			searchEmail();
+			break;
+		case 4:
+			searchAddress();
+			break;
+		case 5:
+			searchBirthday();
+			break;
+		default:
+			System.out.println("Invalid entry!");
+			return;
+		}
+	}
+
+		public static boolean searchName() {
 		
+		System.out.print("Enter name: ");
+		String name = input.nextLine();
+
+		listC.findFirst();
+		while (listC.retrieve() != null) {
+			if (listC.retrieve().getName().equalsIgnoreCase(name)) {
+				System.out.println(listC.retrieve());
+				return true;
+			}
+			listC.findNext();
+		}
+		System.out.println("Contact not found.");
+		return false;
+	}
+	
+	public static boolean searchPhone() {
+		System.out.print("Enter number: ");
+		String number = input.next();
+
+		listC.findFirst();
+		while (listC.retrieve() != null) {
+			if (listC.retrieve().getPhoneNumber().equals(number)) {
+				System.out.println(listC.retrieve());
+				return true;
+			}
+			listC.findNext();;
+		}
+		System.out.println("Contact not found.");
+		return false;
+	}
+
+	public static boolean searchEmail() {
 		
+		System.out.print("Enter email: ");
+		String email = input.next();
+				
+		//flag to print all contacts.
+		boolean flag = false;
+
+		listC.findFirst();
+		while (listC.retrieve() != null) {
+			if (listC.retrieve().getEmail().equals(email)) {
+				System.out.println(listC.retrieve());
+				flag = true;
+			}
+			listC.findNext();
+		}
+		if (!flag) {
+			System.out.println("Contact not found.");
+			return false;
+		}
+		return flag;
+	}
+
+	public static boolean searchAddress() {
+		
+		System.out.print("Enter address: ");
+		String address = input.nextLine();
+		
+		//flag to print all contacts.
+		boolean flag = false;
+
+		listC.findFirst();
+		while (listC.retrieve() != null) {
+			if (listC.retrieve().getAddress().equals(address)) {
+				System.out.println(listC.retrieve());
+				flag = true;
+			}
+			listC.findNext();
+		}
+		if (!flag) {
+			System.out.println("Contact not found.");
+			return false;
+		}
+		return flag;
+	}
+
+	public static boolean searchBirthday() {
+		
+		System.out.print("Enter birthday: ");
+		String bday = input.next();
+
+		//flag to print all contacts.
+		boolean flag = false;
+
+		listC.findFirst();
+		while (listC.retrieve() != null) {
+			if (listC.retrieve().getBirthday().equals(bday)) {
+				System.out.println(listC.retrieve());
+				flag = true;
+			}
+			listC.findNext();
+		}
+		if (!flag) {
+			System.out.println("Contact not found.");
+			return false;
+		}
+		return flag;
+	}
+	
+		
+		// 3) Delete a Contact
 		public static boolean removeContact() {
             System.out.println("Enter contact's name: ");
             // filler solves java bug of skipping input.nextLine()
@@ -59,12 +204,12 @@ public class PhoneBook{
             c = listC.remove(c);
             
             // Incase contact exists but doesn't have events.
-            if(c != null && c.events == null) {
+            if(c != null && c.events.isEmpty()) {
             	System.out.println("Contact removed!");
             	return true;
             }
             // Incase contact exists and has events.
-            if(c != null && c.events != null) {
+            if(c != null && !c.events.isEmpty()) {
                 c.events.findFirst();
                 while(c.events.retrieve() != null) {
                 	listE.remove(c.events.retrieve());
@@ -79,6 +224,7 @@ public class PhoneBook{
             return false;
             }
 		
+			// 4) Schedule an event
 		public static boolean scheduleEvent() {
 			Event e = new Event();
 			System.out.println("Enter event title: ");
@@ -92,17 +238,19 @@ public class PhoneBook{
 			c.setName(cName);
 			e.setContact(cName);
 			
+			if(!listC.search(c)) {
+				System.out.println("Contact not found!");
+				return false;
+			}
+
 			System.out.println("Enter event date and time (MM/DD/YYYY HH:MM): ");
+			
 			e.setDate(input.next()); e.setTime(input.next());
 			input.nextLine();
 			
 			System.out.println("Enter event location: ");
 			e.setLocation(input.nextLine());
 			
-			if(!listC.search(c)) {
-				System.out.println("Contact not found!");
-				return false;
-			}
 			
 			if(listC.retrieve().addEvent(e)) {
 				// Event added to Contact
@@ -115,47 +263,8 @@ public class PhoneBook{
 			return false;
 				
 		}
-	            
-		public static void printEvents() {
-			listE.findFirst();
-			// a flag to check if any event exists and print appropriate message
-			boolean flag = true;
-			for(int i = 0; i < listE.size; i++) {
-				System.out.println("Event " + (i+1) + ":");
-				System.out.println(listE.retrieve().getTitle());
-				listE.findNext();
-				flag = false;
-			}
-			if(flag)
-				System.out.println("No events found");
-		}
-		public static void printContactFName() {
-			System.out.println("Enter first name: ");
-			String name = input.next();
-			// An array to split the full name into first and last name
-			String arrName[];
-			listC.findFirst();
-			// a flag to check if any contact exists and print appropriate message
-			boolean flag = true;
-			while(listC.retrieve() != null) {
-				arrName = listC.retrieve().getName().split(" ");
-				if(name.compareToIgnoreCase(arrName[0]) == 0) {
-					System.out.println("Contact found!");
-					System.out.println("Contact name: " + listC.retrieve().getName());
-					System.out.println("Phone Number: " + listC.retrieve().getPhoneNumber());
-					System.out.println("Email Address: " + listC.retrieve().getEmail());
-					System.out.println("Address: " + listC.retrieve().getAddress());
-					System.out.println("Birthday: " + listC.retrieve().getBirthday());
-					System.out.println("Notes: " + listC.retrieve().getNotes());
-					System.out.println();
-					flag = false;
-				}
-				listC.findNext();
-			}
-			if(flag) {
-				System.out.println("No contacts found");
-			}
-		}
+
+		//5) Print event details
 		public static void eventDetails() {
 			System.out.println("Enter search criteria: ");
 			System.out.println("1) Contact name: ");
@@ -174,7 +283,7 @@ public class PhoneBook{
 					c = listC.retrieve();
 					
 					// if contact exists but has no events
-					if(c.events == null) {
+					if(c.events.isEmpty()) {
 						System.out.println("Contact has no events.");
 						return;
 					}
@@ -182,11 +291,7 @@ public class PhoneBook{
 					// Loop to print event details
 					while(c != null && c.events.retrieve() != null) {
 						System.out.println("Event " + (i+1) + ":");
-						System.out.println(c.events.retrieve().getTitle());
-						System.out.println(c.events.retrieve().getContact());
-						System.out.println(c.events.retrieve().getDate());
-						System.out.println(c.events.retrieve().getTime());
-						System.out.println(c.events.retrieve().getLocation());
+						System.out.println(c.events.retrieve());
 						c.events.findNext();
 						i++;
 					}
@@ -203,19 +308,64 @@ public class PhoneBook{
 				e.setTitle(title);
 				boolean foundE = listE.search(e);
 				if(foundE) {
-					e = listE.retrieve();
+					
 					System.out.println("Event found!");
-					System.out.println("Event title: " + e.getTitle());
-					System.out.println("Contact name: " + e.getContact());
-					System.out.println("Event date/time: " + e.getDate() + " " + e.getTime());
-					System.out.println("Event location: " + e.getLocation());
+					System.out.println(listE.retrieve());
+					
 				}
 				else {
 					System.out.println("Event not found");
 				}
+				break;
+				default:
+				System.out.println("please enter a valid number!");
 			}
-			
 		}
+
+		//6) Print contacts by first name
+		public static void printContactFName() {
+			System.out.println("Enter first name: ");
+			String name = input.next();
+			// An array to split the full name into first and last name
+			String arrName[];
+			listC.findFirst();
+			// a flag to check if any contact exists and print appropriate message
+			boolean flag = true;
+			while(listC.retrieve() != null) {
+				arrName = listC.retrieve().getName().split(" ");
+				if(name.compareToIgnoreCase(arrName[0]) == 0) {
+					System.out.println("Contact found!");
+					System.out.println(listC.retrieve());
+					
+					flag = false;
+				}
+				listC.findNext();
+			}
+			if(flag) {
+				System.out.println("No contacts found");
+			}
+		}
+
+	    //7) Print all events alphabetically
+		public static void printEvents() {
+			listE.findFirst();
+			// a flag to check if any event exists and print appropriate message
+			boolean flag = true;
+			for(int i = 0; i < listE.size; i++) {
+				System.out.println("Event " + (i+1) + ":");
+				System.out.println(listE.retrieve());
+				listE.findNext();
+				flag = false;
+			}
+			if(flag)
+				System.out.println("No events found");
+		}
+		
+		
+
+	
+
+		
 		public static void mainmenu() {
 			System.out.println("Please choose an option: ");
 			System.out.println("1. Add a contact");
@@ -241,7 +391,7 @@ public class PhoneBook{
 					System.out.println("Contact not added.");
 				break;
 			case 2:
-				listC.search();
+				search();
 				break;
 			case 3:
 				removeContact();

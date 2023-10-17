@@ -13,7 +13,7 @@ public class Contact implements Comparable<Contact>{
 		this.phoneNumber = " ";
 		this.email = " ";
 		this.address = " ";
-		this.birthday = " ";
+		this.birthday = "";
 		this.notes = " ";
 		events = new LinkedListADT<Event>();
 	}
@@ -79,7 +79,16 @@ public class Contact implements Comparable<Contact>{
 	}
 
 
-	@Override
+	public String toString() {
+
+		return "\nName: " + getName() + 
+		"\nPhone number: " + getPhoneNumber() + 
+		"\nEmail address: " + getEmail() + 
+		"\nAddress: " + getAddress() +
+		 "\nBirthday: " + getBirthday() +
+		  "\nNotes: " + getNotes() + "\n"; 
+
+	}
 	
 	// returns > 0 if o.name becomes BEFORE this.name
 	// returns 0 if both are the same
