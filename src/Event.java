@@ -7,7 +7,7 @@ public class Event implements Comparable<Event>{
 	private String location;
 	private String contact;
 	private Scanner input;
-	@SuppressWarnings("deprecation")
+	
 	public Event() {
 
 	}
@@ -56,10 +56,17 @@ public class Event implements Comparable<Event>{
 	public void setInput(Scanner input) {
 		this.input = input;
 	}
+
+	public String toString() {
+		return "\nEvent title: " + title +  
+		"\nEvent date and time (MM/DD/YYYY HH:MM): " + date + " " + time +  
+	   "\nEvent location: " + location +  
+		"\nContacts names: " + contact + "\n";  
+	}
 	
-	// returns > 0 if o.name becomes BEFORE this.name
+	// returns > 0 if e.title comes BEFORE this.title
 	// returns 0 if both are the same
-	// returns < 0 if o.name becomes AFTER this.name
+	// returns < 0 if e.title comes AFTER this.title
 	public int compareTo(Event e) {
             return (this.title.compareToIgnoreCase(e.title));
         
